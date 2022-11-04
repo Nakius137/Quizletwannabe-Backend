@@ -7,7 +7,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const checkForEnv_1 = __importDefault(require("../utilites/checkForEnv"));
 dotenv_1.default.config();
-const auth = (req, res, next) => {
+const authToken = (req, res, next) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     if (!token)
@@ -21,4 +21,4 @@ const auth = (req, res, next) => {
         }
     });
 };
-exports.default = auth;
+exports.default = authToken;

@@ -2,25 +2,24 @@ import { Response } from "express";
 import { CustomRequest } from "../interfaces/@types";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import checkForEnv from "../utilites/checkForEnv";
 
 dotenv.config();
 
-const auth = (req: CustomRequest, res: Response, next: Function) => {
+const authToken = (req: CustomRequest, res: Response, next: Function) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (token === null) return res.sendStatus(401);
+  if (!token) return res.sendStatus(401);
 
-  //@ts-ignore
-  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+  jwt.verify(token, checkForEnv(process.env.TOKEN_SECRET), (err, user) => {
     if (err) return res.sendStatus(403);
 
-    if (typeof req.user !== undefined) {
-      //@ts-ignore
-      req.user = user;
+    if (user) {
+      console.log(req.user);
       next();
     }
   });
 };
 
-export default auth;
+export default authToken;
