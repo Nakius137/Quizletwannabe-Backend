@@ -1,8 +1,8 @@
 import express, { Application } from "express";
 import dotenv from "dotenv";
-import authToken from "./middlewears/authToken";
-import autoRefresh from "./middlewears/authRefresh";
-import authUser from "./middlewears/authUser";
+import authToken from "./middlewears/auth/token";
+import autoRefresh from "./middlewears/auth/refreshToken";
+import authUser from "./middlewears/auth/user";
 
 dotenv.config();
 

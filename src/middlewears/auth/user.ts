@@ -1,6 +1,6 @@
-import { CustomRequest } from "../interfaces/@types";
-import checkForEnv from "../utilites/checkForEnv";
-import generateAccessToken from "../utilites/generateAccess";
+import { CustomRequest } from "../../interfaces/@types";
+import checkForEnv from "../../utilites/checkForEnv";
+import generateAccessToken from "../../utilites/generateAccess";
 import jwt from "jsonwebtoken";
 import { Response } from "express";
 

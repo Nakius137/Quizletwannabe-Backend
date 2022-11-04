@@ -1,9 +1,9 @@
 import { Response } from "express";
-import { CustomRequest } from "../interfaces/@types";
+import { CustomRequest } from "../../interfaces/@types";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import checkForEnv from "../utilites/checkForEnv";
-import generateAccessToken from "../utilites/generateAccess";
+import checkForEnv from "../../utilites/checkForEnv";
+import generateAccessToken from "../../utilites/generateAccess";
 
 dotenv.config();
 
