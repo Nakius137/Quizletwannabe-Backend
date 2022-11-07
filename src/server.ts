@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 import authToken from "./middlewears/auth/token";
 import autoRefresh from "./middlewears/auth/refreshToken";
 import authUser from "./middlewears/auth/user";
-import select from "./middlewears/dbQuery/selectData";
+import getColecttions from "./database/queries/getColecttions";
+import { CustomRequest } from "./interfaces/@types";
 
 dotenv.config();
 
@@ -17,14 +18,14 @@ app.get(
   "/",
   //@ts-ignore
   authToken,
-  select,
-  (req, res) => {
-    console.log("dziala po zmianach");
-    const users = [{ id: 1, name: "Adam" }];
-
-    res.send(users);
+  (req: CustomRequest, res: Response) => {
+    getColecttions(req.body.email);
   }
 );
+
+// app.get("/login", login);
+
+// app.get("register", regiser)
 
 app.post(
   "/auth",
@@ -37,7 +38,3 @@ app.post(
   //@ts-ignore
   autoRefresh
 );
-
-app.listen(PORT, "127.0.0.1", () => {
-  console.log(`dziala na ${PORT}`);
-});
