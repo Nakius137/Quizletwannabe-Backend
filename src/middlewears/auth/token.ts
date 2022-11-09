@@ -16,7 +16,6 @@ const authToken = (req: CustomRequest, res: Response, next: Function) => {
     if (err) return res.sendStatus(403);
 
     if (user) {
-      console.log(req.user);
       next();
     }
   });

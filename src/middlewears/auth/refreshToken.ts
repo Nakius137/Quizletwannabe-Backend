@@ -8,6 +8,7 @@ import generateAccessToken from "../../utilites/generateAccess";
 dotenv.config();
 
 const autoRefresh = (req: CustomRequest, res: Response, next: Function) => {
+  const email = req.body.email;
   const refreshToken = req.body.token;
 
   if (!refreshToken) {
@@ -23,7 +24,7 @@ const autoRefresh = (req: CustomRequest, res: Response, next: Function) => {
     return res.status(403);
   }
 
-  const accessToken = generateAccessToken({ id: 1 });
+  const accessToken = generateAccessToken(email);
 
   res.send({ accessToken });
   next();

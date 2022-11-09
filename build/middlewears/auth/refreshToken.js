@@ -9,6 +9,7 @@ const checkForEnv_1 = __importDefault(require("../../utilites/checkForEnv"));
 const generateAccess_1 = __importDefault(require("../../utilites/generateAccess"));
 dotenv_1.default.config();
 const autoRefresh = (req, res, next) => {
+    const email = req.body.email;
     const refreshToken = req.body.token;
     if (!refreshToken) {
         return res.status(401);
@@ -17,7 +18,7 @@ const autoRefresh = (req, res, next) => {
     if (!validToken) {
         return res.status(403);
     }
-    const accessToken = (0, generateAccess_1.default)({ id: 1 });
+    const accessToken = (0, generateAccess_1.default)(email);
     res.send({ accessToken });
     next();
 };

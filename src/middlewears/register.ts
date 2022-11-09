@@ -3,9 +3,9 @@ import addUserToDB from "../database/queries/addUserToDB";
 import hashPassword from "../utilites/hashPassword";
 import { CustomRequest } from "./../interfaces/@types";
 
-const register = async (req: CustomRequest, res: Response) => {
+const register = (req: CustomRequest, res: Response) => {
   const email = req.body.email;
-  const password = await hashPassword(req.body.password);
+  const password = hashPassword(req.body.password);
 
   const user = addUserToDB(email, password);
 

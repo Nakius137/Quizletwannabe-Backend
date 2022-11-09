@@ -2,25 +2,25 @@ import bcrypt from "bcrypt";
 import db from "../dbconfig";
 
 const loginUser = async (email: string, password: string) => {
-  const sql = `SELECT password FROM Users WHERE email=${db.escape(email)}`;
-
-  const passwordFromDB = db.query(sql, (err, result) => {
+  const sql = `SELECT passwd FROM User WHERE email=${db.escape(email)}`;
+  const userPasswordVerification = db.query(sql, (err, result) => {
     if (err) {
       console.error("Błąd z baza danych");
-    }
-    return result;
-  });
-
-  if (!email) {
-    return alert("Nie ma takiego użytkownika");
-  } else {
-    //@ts-ignore
-    if (bcrypt.compare(password, passwordFromDB)) {
-      alert("Zalogownano");
     } else {
-      alert("Złe hasło");
+      if (!email) {
+        return console.error("Nie ma takiego użytkownika");
+      } else {
+        //@ts-ignore
+        const hashedPassword = result["0"].passwd as string;
+        console.log(hashedPassword, " ", password);
+        if (bcrypt.compareSync(password, hashedPassword)) {
+          console.log("Zalogownano");
+        } else {
+          console.log("Złe hasło");
+        }
+      }
     }
-  }
+  });
 };
 
 export default loginUser;

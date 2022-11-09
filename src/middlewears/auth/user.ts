@@ -3,16 +3,12 @@ import checkForEnv from "../../utilites/checkForEnv";
 import generateAccessToken from "../../utilites/generateAccess";
 import jwt from "jsonwebtoken";
 import { Response } from "express";
-import hashPassword from "../../utilites/hashPassword";
 
 const authUser = (req: CustomRequest, res: Response, next: Function) => {
-  const email = req.body.email;
-  const password = hashPassword(req.body.password);
-
-  const accessToken = generateAccessToken(email);
+  const accessToken = generateAccessToken({ id: 1 });
 
   const refreshToken = jwt.sign(
-    email,
+    { id: 1 },
     checkForEnv(process.env.REFRESH_TOKEN_SECRET),
     {
       expiresIn: 525600,
