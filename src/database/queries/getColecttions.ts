@@ -1,7 +1,8 @@
 import db from "../dbconfig";
 import { Response } from "express";
+import { CustomRequest } from "../../interfaces/@types";
 
-const getColecttions = (email: string, res?: Response) => {
+const getColecttions = (email: string, req: CustomRequest, res: Response) => {
   let sqlUserId = `SELECT _id FROM User WHERE email = ${db.escape(email)}`;
 
   let userIdQuery = db.query(sqlUserId, (err, idResult) => {
@@ -34,7 +35,6 @@ const getColecttions = (email: string, res?: Response) => {
               if (err) {
                 console.error("Błąd w uzyskaniu słowek do kolekcji");
               }
-              console.log(nameResult);
             }
           );
 
@@ -42,7 +42,7 @@ const getColecttions = (email: string, res?: Response) => {
             if (err) {
               console.error("Błąd w uzyskaniu słowek do kolekcji");
             }
-            console.log(wordResult);
+            res.send(wordResult);
           });
         }
       }

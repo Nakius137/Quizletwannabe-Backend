@@ -21,8 +21,7 @@ app.get(
   //@ts-ignore
   authToken,
   (req: CustomRequest, res: Response) => {
-    const postman = getColecttions(req.body.email);
-    res.send(postman);
+    const postman = getColecttions(req.body.email, req, res);
   }
 );
 //@ts-ignore

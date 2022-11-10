@@ -10,6 +10,7 @@ const refreshToken_1 = __importDefault(require("./middlewears/auth/refreshToken"
 const user_1 = __importDefault(require("./middlewears/auth/user"));
 const getColecttions_1 = __importDefault(require("./database/queries/getColecttions"));
 const login_1 = __importDefault(require("./middlewears/login"));
+const register_1 = __importDefault(require("./middlewears/register"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = 5000;
@@ -23,13 +24,11 @@ token_1.default, (req, res) => {
 });
 //@ts-ignore
 app.get("/login", login_1.default);
-// app.get("register", regiser)
+//@ts-ignore
+app.post("/register", register_1.default);
 app.post("/auth", 
 //@ts-ignore
-user_1.default, (req, res) => {
-    // console.log(req.body);
-    // res.send("koniec");
-});
+user_1.default);
 app.post("/auth/refresh", 
 //@ts-ignore
 refreshToken_1.default);

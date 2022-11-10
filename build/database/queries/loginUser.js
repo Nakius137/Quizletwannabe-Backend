@@ -16,24 +16,26 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const dbconfig_1 = __importDefault(require("../dbconfig"));
 const loginUser = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     const sql = `SELECT passwd FROM User WHERE email=${dbconfig_1.default.escape(email)}`;
-    console.log(sql);
-    const passwordFromDB = dbconfig_1.default.query(sql, (err, result) => {
+    const userPasswordVerification = dbconfig_1.default.query(sql, (err, result) => {
         if (err) {
             console.error("Błąd z baza danych");
         }
-        return result;
-    });
-    if (!email) {
-        return console.error("Nie ma takiego użytkownika");
-    }
-    else {
-        //@ts-ignore
-        if (bcrypt_1.default.compare(password, passwordFromDB)) {
-            console.log("Zalogownano");
-        }
         else {
-            console.log("Złe hasło");
+            if (!email) {
+                return console.error("Nie ma takiego użytkownika");
+            }
+            else {
+                //@ts-ignore
+                const hashedPassword = result["0"].passwd;
+                console.log(hashedPassword, " ", password);
+                if (bcrypt_1.default.compareSync(password, hashedPassword)) {
+                    console.log("Zalogownano");
+                }
+                else {
+                    console.log("Złe hasło");
+                }
+            }
         }
-    }
+    });
 });
 exports.default = loginUser;
