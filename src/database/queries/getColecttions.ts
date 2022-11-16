@@ -1,35 +1,32 @@
 import db from "../dbconfig";
 import { Response } from "express";
-import { UserRequest, dataObj } from "../../interfaces/@types";
+import { UserRequest, dataObj, queryId } from "../../interfaces/@types";
 
 const getColecttions = (email: string, req: UserRequest, res: Response) => {
-  console.log(email);
   let DBdata: dataObj = {
     collectionName: "",
     words: [],
   };
   let userIdSql = `SELECT _id FROM User WHERE email = ${db.escape(email)}`;
-
-  let userIdQuery = db.query(userIdSql, (err, idResult) => {
+  let userIdQuery = db.query(userIdSql, (err, idResult: queryId) => {
     if (err) {
       console.error("Błąd w uzyskaniu danych");
     }
-    //@ts-ignorec
-    //@ts-ignore
     const userId = idResult["0"]._id;
 
     let sqlCollection = `SELECT * FROM Subscriptions WHERE _subscriberId = ${userId}`;
     let subscriptionQuery = db.query(
       sqlCollection,
-      (err, subscryptionResult) => {
+      (err, subscryptionResult: queryId) => {
         if (err) {
           console.log("Błąd w uzyskaniu subskrypcji");
         }
-        //@ts-ignore
-        if (subscryptionResult.length == 0) {
+        if (
+          Array.isArray(subscryptionResult) &&
+          subscryptionResult.length == 0
+        ) {
           console.log("Brak aktualnie zestawów");
         } else {
-          //@ts-ignore
           const collectionId = subscryptionResult["0"]._collectionId;
 
           let sqlWords = `SELECT OriginalContent, TranslatedContent FROM Word WHERE _collectionId = ${collectionId}`;

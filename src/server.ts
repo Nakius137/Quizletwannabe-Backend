@@ -21,28 +21,20 @@ const corsOptions = {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors(corsOptions));
-//@ts-ignore
+
 app.post("/login", login);
 
-app.get(
-  "/:email",
-  //@ts-ignore
-  authToken,
-  (req: UserRequest, res: Response) => {
-    console.log("w acllbacku " + req.query.email);
-    //@ts-ignore
-    const userContent = getColecttions(req.query.email, req, res);
+app.get("/:email", authToken, (req: UserRequest, res: Response) => {
+  if (req.query.email) {
+    const userContent = getColecttions(req.query.email as string, req, res);
+  } else {
+    throw console.error("Błąd w mainie");
   }
-);
+});
 
-//@ts-ignore
 app.post("/register", register);
 
-app.post(
-  "/auth/refresh",
-  //@ts-ignore
-  autoRefresh
-);
+app.post("/auth/refresh", autoRefresh);
 
 app.listen(PORT, "127.0.0.1", () => {
   console.log("działa");

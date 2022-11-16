@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { queryId } from "../../interfaces/@types";
 import db from "../dbconfig";
 
 const loginUser = async (
@@ -7,18 +8,14 @@ const loginUser = async (
   returnToken: Function
 ) => {
   const sql = `SELECT passwd FROM User WHERE email=${db.escape(email)}`;
-  const userPasswordVerification = db.query(sql, (err, result) => {
+  const userPasswordVerification = db.query(sql, (err, result: queryId) => {
     if (err) {
       console.error("Błąd z baza danych");
-      //@ts-ignore
-    } else if (!email || result.length === 0) {
+    } else if (!email || (Array.isArray(result) && result.length === 0)) {
       console.log(email);
       return console.error("Nie ma takiego użytkownika");
     } else {
-      //@ts-ignore
-      console.log(result);
-      //@ts-ignore
-      const hashedPassword = result["0"].passwd as string;
+      const hashedPassword = result["0"].passwd as unknown as string;
       if (bcrypt.compareSync(password, hashedPassword)) {
         returnToken();
         console.log(email + ", " + password);

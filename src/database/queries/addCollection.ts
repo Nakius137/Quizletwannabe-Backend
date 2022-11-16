@@ -1,4 +1,4 @@
-import { CollectionRequest } from "../../interfaces/@types";
+import { CollectionRequest, queryId } from "../../interfaces/@types";
 import db from "../dbconfig";
 
 const addCollection = (req: CollectionRequest, res: Response) => {
@@ -9,11 +9,10 @@ const addCollection = (req: CollectionRequest, res: Response) => {
 
   let userIdSql = `SELECT _id FROM User WHERE email = ${db.escape(email)}`;
 
-  let userIdQuery = db.query(userIdSql, (err, idResult) => {
+  let userIdQuery = db.query(userIdSql, (err, idResult: queryId) => {
     if (err) {
       console.error("Błąd w procesie otrzymania danych");
     }
-    //@ts-ignore
     const ownerId = idResult["0"]._id;
 
     let insertCollectionSql = `INSERT INTO Collection VALUES (null, ${ownerId}, ${collectionName})`;
