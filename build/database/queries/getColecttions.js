@@ -4,12 +4,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dbconfig_1 = __importDefault(require("../dbconfig"));
-const getColecttions = (email, res) => {
-    let sqlUserId = `SELECT _id FROM User WHERE email = ${dbconfig_1.default.escape(email)}`;
-    let userIdQuery = dbconfig_1.default.query(sqlUserId, (err, idResult) => {
+const getColecttions = (email, req, res) => {
+    let DBdata = {
+        collectionName: "",
+        words: [],
+    };
+    // console.log(email);
+    let userIdSql = `SELECT _id FROM User WHERE email = ${dbconfig_1.default.escape(email)}`;
+    let userIdQuery = dbconfig_1.default.query(userIdSql, (err, idResult) => {
         if (err) {
             console.error("Błąd w uzyskaniu danych");
         }
+        //@ts-ignorec
+        // console.log(email);
+        // console.log(idResult);
         //@ts-ignore
         const userId = idResult["0"]._id;
         let sqlCollection = `SELECT * FROM Subscriptions WHERE _subscriberId = ${userId}`;
@@ -30,14 +38,14 @@ const getColecttions = (email, res) => {
                     if (err) {
                         console.error("Błąd w uzyskaniu słowek do kolekcji");
                     }
-                    console.log(nameResult);
+                    DBdata[`collectionName`] = nameResult;
                 });
                 let wordsQuery = dbconfig_1.default.query(sqlWords, (err, wordResult) => {
                     if (err) {
                         console.error("Błąd w uzyskaniu słowek do kolekcji");
                     }
-                    console.log(wordResult);
-                    res === null || res === void 0 ? void 0 : res.send(wordResult);
+                    DBdata[`words`] = wordResult;
+                    res.send(DBdata);
                 });
             }
         });

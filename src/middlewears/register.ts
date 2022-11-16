@@ -1,9 +1,9 @@
 import { Response } from "express";
 import addUserToDB from "../database/queries/addUserToDB";
 import hashPassword from "../utilites/hashPassword";
-import { CustomRequest } from "./../interfaces/@types";
+import { UserRequest } from "./../interfaces/@types";
 
-const register = (req: CustomRequest, res: Response) => {
+const register = (req: UserRequest, res: Response) => {
   const email = req.body.email;
   const password = hashPassword(req.body.password);
 

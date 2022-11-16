@@ -1,12 +1,16 @@
 import { Response } from "express";
-import { CustomRequest } from "./../interfaces/@types";
+import { UserRequest } from "./../interfaces/@types";
 import loginUser from "../database/queries/loginUser";
+import authUser from "./auth/user";
 
-const login = (req: CustomRequest, res: Response) => {
+const login = (req: UserRequest, res: Response) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  const user = loginUser(email, password);
+  const returnToken = () => {
+    authUser(req, res);
+  };
+  const user = loginUser(email, password, returnToken);
 
   return user;
 };

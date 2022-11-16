@@ -1,14 +1,20 @@
 import db from "../dbconfig";
 import { Response } from "express";
-import { CustomRequest } from "../../interfaces/@types";
+import { UserRequest, dataObj } from "../../interfaces/@types";
 
-const getColecttions = (email: string, req: CustomRequest, res: Response) => {
-  let sqlUserId = `SELECT _id FROM User WHERE email = ${db.escape(email)}`;
+const getColecttions = (email: string, req: UserRequest, res: Response) => {
+  console.log(email);
+  let DBdata: dataObj = {
+    collectionName: "",
+    words: [],
+  };
+  let userIdSql = `SELECT _id FROM User WHERE email = ${db.escape(email)}`;
 
-  let userIdQuery = db.query(sqlUserId, (err, idResult) => {
+  let userIdQuery = db.query(userIdSql, (err, idResult) => {
     if (err) {
       console.error("Błąd w uzyskaniu danych");
     }
+    //@ts-ignorec
     //@ts-ignore
     const userId = idResult["0"]._id;
 
@@ -35,6 +41,7 @@ const getColecttions = (email: string, req: CustomRequest, res: Response) => {
               if (err) {
                 console.error("Błąd w uzyskaniu słowek do kolekcji");
               }
+              DBdata[`collectionName`] = nameResult as unknown as string;
             }
           );
 
@@ -42,7 +49,8 @@ const getColecttions = (email: string, req: CustomRequest, res: Response) => {
             if (err) {
               console.error("Błąd w uzyskaniu słowek do kolekcji");
             }
-            res.send(wordResult);
+            DBdata[`words`] = wordResult as unknown as string[];
+            res.send(DBdata);
           });
         }
       }

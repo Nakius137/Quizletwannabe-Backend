@@ -14,26 +14,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dbconfig_1 = __importDefault(require("../dbconfig"));
-const loginUser = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
+const loginUser = (email, password, returnToken) => __awaiter(void 0, void 0, void 0, function* () {
     const sql = `SELECT passwd FROM User WHERE email=${dbconfig_1.default.escape(email)}`;
     const userPasswordVerification = dbconfig_1.default.query(sql, (err, result) => {
         if (err) {
             console.error("Błąd z baza danych");
+            //@ts-ignore
+        }
+        else if (!email || result.length === 0) {
+            console.log(email);
+            return console.error("Nie ma takiego użytkownika");
         }
         else {
-            if (!email) {
-                return console.error("Nie ma takiego użytkownika");
+            //@ts-ignore
+            console.log(result);
+            //@ts-ignore
+            const hashedPassword = result["0"].passwd;
+            if (bcrypt_1.default.compareSync(password, hashedPassword)) {
+                returnToken();
+                console.log(email + ", " + password);
             }
             else {
-                //@ts-ignore
-                const hashedPassword = result["0"].passwd;
-                console.log(hashedPassword, " ", password);
-                if (bcrypt_1.default.compareSync(password, hashedPassword)) {
-                    console.log("Zalogownano");
-                }
-                else {
-                    console.log("Złe hasło");
-                }
+                console.log("Złe hasło");
             }
         }
     });

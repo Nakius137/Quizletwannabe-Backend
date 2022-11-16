@@ -1,10 +1,10 @@
-import { CustomRequest } from "../../interfaces/@types";
+import { UserRequest } from "../../interfaces/@types";
 import checkForEnv from "../../utilites/checkForEnv";
 import generateAccessToken from "../../utilites/generateAccess";
 import jwt from "jsonwebtoken";
 import { Response } from "express";
 
-const authUser = (req: CustomRequest, res: Response, next: Function) => {
+const authUser = (req: UserRequest, res: Response) => {
   const accessToken = generateAccessToken({ id: 1 });
 
   const refreshToken = jwt.sign(

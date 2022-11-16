@@ -1,12 +1,12 @@
 import { Response } from "express";
-import { CustomRequest } from "../../interfaces/@types";
+import { UserRequest } from "../../interfaces/@types";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import checkForEnv from "../../utilites/checkForEnv";
 
 dotenv.config();
 
-const authToken = (req: CustomRequest, res: Response, next: Function) => {
+const authToken = (req: UserRequest, res: Response, next: Function) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 

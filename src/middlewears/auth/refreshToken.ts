@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { CustomRequest } from "../../interfaces/@types";
+import { UserRequest } from "../../interfaces/@types";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import checkForEnv from "../../utilites/checkForEnv";
@@ -7,7 +7,7 @@ import generateAccessToken from "../../utilites/generateAccess";
 
 dotenv.config();
 
-const autoRefresh = (req: CustomRequest, res: Response, next: Function) => {
+const autoRefresh = (req: UserRequest, res: Response, next: Function) => {
   const email = req.body.email;
   const refreshToken = req.body.token;
 

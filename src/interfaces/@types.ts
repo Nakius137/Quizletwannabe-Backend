@@ -1,5 +1,17 @@
 import { Request } from "express";
 
-export interface CustomRequest extends Request {
+export interface UserRequest extends Request {
   user: string;
+}
+
+export interface CollectionRequest extends Request {
+  email: string;
+  collectionName: string;
+  OrginalContent: string;
+  TranslatedContent: string;
+}
+
+export interface dataObj {
+  collectionName: string;
+  words: string[];
 }
