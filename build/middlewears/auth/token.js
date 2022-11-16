@@ -8,8 +8,6 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const checkForEnv_1 = __importDefault(require("../../utilites/checkForEnv"));
 dotenv_1.default.config();
 const authToken = (req, res, next) => {
-    console.log(req.body);
-    console.log(req.headers);
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     if (!token)

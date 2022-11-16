@@ -12,15 +12,13 @@ const loginUser = async (
     if (err) {
       console.error("Błąd z baza danych");
     } else if (!email || (Array.isArray(result) && result.length === 0)) {
-      console.log(email);
       return console.error("Nie ma takiego użytkownika");
     } else {
       const hashedPassword = result["0"].passwd as unknown as string;
       if (bcrypt.compareSync(password, hashedPassword)) {
         returnToken();
-        console.log(email + ", " + password);
       } else {
-        console.log("Złe hasło");
+        console.error("Złe hasło");
       }
     }
   });

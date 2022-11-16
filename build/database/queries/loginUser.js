@@ -19,23 +19,17 @@ const loginUser = (email, password, returnToken) => __awaiter(void 0, void 0, vo
     const userPasswordVerification = dbconfig_1.default.query(sql, (err, result) => {
         if (err) {
             console.error("Błąd z baza danych");
-            //@ts-ignore
         }
-        else if (!email || result.length === 0) {
-            console.log(email);
+        else if (!email || (Array.isArray(result) && result.length === 0)) {
             return console.error("Nie ma takiego użytkownika");
         }
         else {
-            //@ts-ignore
-            console.log(result);
-            //@ts-ignore
             const hashedPassword = result["0"].passwd;
             if (bcrypt_1.default.compareSync(password, hashedPassword)) {
                 returnToken();
-                console.log(email + ", " + password);
             }
             else {
-                console.log("Złe hasło");
+                console.error("Złe hasło");
             }
         }
     });

@@ -19,13 +19,13 @@ const getColecttions = (email: string, req: UserRequest, res: Response) => {
       sqlCollection,
       (err, subscryptionResult: queryId) => {
         if (err) {
-          console.log("Błąd w uzyskaniu subskrypcji");
+          console.error("Błąd w uzyskaniu subskrypcji");
         }
         if (
           Array.isArray(subscryptionResult) &&
           subscryptionResult.length == 0
         ) {
-          console.log("Brak aktualnie zestawów");
+          console.error("Brak aktualnie zestawów");
         } else {
           const collectionId = subscryptionResult["0"]._collectionId;
 

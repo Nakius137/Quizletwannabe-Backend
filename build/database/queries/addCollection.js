@@ -14,7 +14,6 @@ const addCollection = (req, res) => {
         if (err) {
             console.error("Błąd w procesie otrzymania danych");
         }
-        //@ts-ignore
         const ownerId = idResult["0"]._id;
         let insertCollectionSql = `INSERT INTO Collection VALUES (null, ${ownerId}, ${collectionName})`;
         let insertCollectionQuery = dbconfig_1.default.query(insertCollectionSql, (err, result) => {

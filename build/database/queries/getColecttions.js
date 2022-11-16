@@ -9,28 +9,22 @@ const getColecttions = (email, req, res) => {
         collectionName: "",
         words: [],
     };
-    // console.log(email);
     let userIdSql = `SELECT _id FROM User WHERE email = ${dbconfig_1.default.escape(email)}`;
     let userIdQuery = dbconfig_1.default.query(userIdSql, (err, idResult) => {
         if (err) {
             console.error("Błąd w uzyskaniu danych");
         }
-        //@ts-ignorec
-        // console.log(email);
-        // console.log(idResult);
-        //@ts-ignore
         const userId = idResult["0"]._id;
         let sqlCollection = `SELECT * FROM Subscriptions WHERE _subscriberId = ${userId}`;
         let subscriptionQuery = dbconfig_1.default.query(sqlCollection, (err, subscryptionResult) => {
             if (err) {
-                console.log("Błąd w uzyskaniu subskrypcji");
+                console.error("Błąd w uzyskaniu subskrypcji");
             }
-            //@ts-ignore
-            if (subscryptionResult.length == 0) {
-                console.log("Brak aktualnie zestawów");
+            if (Array.isArray(subscryptionResult) &&
+                subscryptionResult.length == 0) {
+                console.error("Brak aktualnie zestawów");
             }
             else {
-                //@ts-ignore
                 const collectionId = subscryptionResult["0"]._collectionId;
                 let sqlWords = `SELECT OriginalContent, TranslatedContent FROM Word WHERE _collectionId = ${collectionId}`;
                 let sqlCollectionName = `SELECT name FROM Collection WHERE _id = ${collectionId}`;

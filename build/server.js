@@ -22,20 +22,17 @@ const corsOptions = {
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use((0, cors_1.default)(corsOptions));
-//@ts-ignore
 app.post("/login", login_1.default);
-app.get("/", 
-//@ts-ignore
-token_1.default, (req, res) => {
-    console.log("chuj 1 to ", req.body);
-    console.log("chuj 2 to ", req.body.email);
-    const userContent = (0, getColecttions_1.default)(req.body.email, req, res);
+app.get("/:email", token_1.default, (req, res) => {
+    if (req.query.email) {
+        const userContent = (0, getColecttions_1.default)(req.query.email, req, res);
+    }
+    else {
+        throw console.error("Błąd w mainie");
+    }
 });
-//@ts-ignore
 app.post("/register", register_1.default);
-app.post("/auth/refresh", 
-//@ts-ignore
-refreshToken_1.default);
+app.post("/auth/refresh", refreshToken_1.default);
 app.listen(PORT, "127.0.0.1", () => {
     console.log("działa");
 });
