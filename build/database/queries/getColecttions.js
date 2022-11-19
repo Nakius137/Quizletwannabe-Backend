@@ -6,8 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dbconfig_1 = __importDefault(require("../dbconfig"));
 const getColecttions = (email, req, res) => {
     let DBdata = {
-        collectionName: "",
-        words: [],
+        collection: [
+            {
+                values: {
+                    name: "",
+                    words: [],
+                },
+            },
+        ],
     };
     let userIdSql = `SELECT _id FROM User WHERE email = ${dbconfig_1.default.escape(email)}`;
     let userIdQuery = dbconfig_1.default.query(userIdSql, (err, idResult) => {
@@ -25,22 +31,36 @@ const getColecttions = (email, req, res) => {
                 console.error("Brak aktualnie zestawów");
             }
             else {
-                const collectionId = subscryptionResult["0"]._collectionId;
-                let sqlWords = `SELECT OriginalContent, TranslatedContent FROM Word WHERE _collectionId = ${collectionId}`;
-                let sqlCollectionName = `SELECT name FROM Collection WHERE _id = ${collectionId}`;
-                let collectionNameQuery = dbconfig_1.default.query(sqlCollectionName, (err, nameResult) => {
-                    if (err) {
-                        console.error("Błąd w uzyskaniu słowek do kolekcji");
+                const resultsLength = subscryptionResult.length;
+                const getCollecttionsId = (resultsLength) => {
+                    for (let i = 0; i <= resultsLength; i++) {
+                        console.log(subscryptionResult);
+                        console.log(subscryptionResult[`0`]);
+                        console.log("chuj2 " + subscryptionResult[`${i}`]);
+                        const collectionId = subscryptionResult[`${i}`]._collectionId;
+                        let sqlWords = `SELECT OriginalContent, TranslatedContent FROM Word WHERE _collectionId = ${collectionId}`;
+                        let sqlCollectionName = `SELECT name FROM Collection WHERE _id = ${collectionId}`;
+                        let collectionNameQuery = dbconfig_1.default.query(sqlCollectionName, (err, nameResult) => {
+                            if (err) {
+                                console.error("Błąd w uzyskaniu słowek do kolekcji");
+                            }
+                            DBdata[`collection`][`${i}`][`values`][`name`] = nameResult[`0`][`name`];
+                            // console.log(nameResult[`0`]);
+                        });
+                        let wordsQuery = dbconfig_1.default.query(sqlWords, (err, wordResult) => {
+                            if (err) {
+                                console.error("Błąd w uzyskaniu słowek do kolekcji");
+                            }
+                            DBdata[`collection`][`${i}`][`values`][`words`] =
+                                wordResult;
+                            return "chuj";
+                        });
                     }
-                    DBdata[`collectionName`] = nameResult;
-                });
-                let wordsQuery = dbconfig_1.default.query(sqlWords, (err, wordResult) => {
-                    if (err) {
-                        console.error("Błąd w uzyskaniu słowek do kolekcji");
-                    }
-                    DBdata[`words`] = wordResult;
-                    res.send(DBdata);
-                });
+                };
+                console.log(resultsLength);
+                const sendDBdata = getCollecttionsId(resultsLength);
+                console.log(sendDBdata);
+                res.send(sendDBdata);
             }
         });
     });
