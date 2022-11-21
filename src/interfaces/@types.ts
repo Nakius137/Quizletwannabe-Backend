@@ -13,17 +13,28 @@ export interface CollectionRequest extends Request {
 }
 
 export interface dataObj {
-  collectionName: string;
-  words: string[];
+  collection: collectionIndex[];
+}
+
+interface collectionIndex {
+  [index: number]: string;
+  values: collectionObj;
+}
+
+interface collectionObj {
+  name: string;
+  words: wordsArray[] | string;
+}
+
+export interface wordsArray {
+  [index: number]: string;
+  word: string[];
 }
 
 export interface queryId extends RowDataPacket {
-  "0": _id;
+  passwd: string;
+  _collectionId: number;
+  _id: number;
+  name: string;
   hashedPassword: string;
 }
-
-type _id = {
-  passwd: queryId;
-  _collectionId: queryId;
-  _id: queryId;
-};
