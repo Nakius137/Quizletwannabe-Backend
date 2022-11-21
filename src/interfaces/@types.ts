@@ -26,19 +26,15 @@ interface collectionObj {
   words: wordsArray[] | string;
 }
 
-interface wordsArray {
+export interface wordsArray {
   [index: number]: string;
   word: string[];
 }
 
 export interface queryId extends RowDataPacket {
-  [index: number]: _id;
+  passwd: string;
+  _collectionId: number;
+  _id: number;
+  name: string;
   hashedPassword: string;
 }
-
-type _id = {
-  passwd: queryId;
-  _collectionId: queryId;
-  _id: queryId;
-  name: string;
-};

@@ -26,7 +26,7 @@ app.post("/login", login);
 
 app.get("/:email", authToken, (req: UserRequest, res: Response) => {
   if (req.query.email) {
-    const userContent = getColecttions(req.query.email as string, req, res);
+    const userContent = getColecttions(req.query.email as string, res);
   } else {
     throw console.error("Błąd w mainie");
   }
