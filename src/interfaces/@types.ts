@@ -18,12 +18,8 @@ export interface dataObj {
 
 interface collectionIndex {
   [index: number]: string;
-  values: collectionObj;
-}
-
-interface collectionObj {
   name: string;
-  words: wordsArray[] | string;
+  words: wordsArray | string;
 }
 
 export interface wordsArray {

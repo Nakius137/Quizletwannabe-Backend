@@ -29,13 +29,12 @@ const getColecttions = (email: string, res: Response) => {
               let DBdata: dataObj = {
                 collection: [],
               };
-              let j = 1;
+              let endOfIteration = 1;
               for (let i = 0; i < resultsLength; i++) {
                 const collectionId =
                   subscryptionResult[`${i}`][`_collectionId`];
                 let sqlWords = `SELECT OriginalContent, TranslatedContent FROM Word WHERE _collectionId = ${collectionId}`;
                 let sqlCollectionName = `SELECT name FROM Collection WHERE _id = ${collectionId}`;
-                console.log(sqlCollectionName);
                 let collectionNameQuery = db.query(
                   sqlCollectionName,
                   (err, nameResult: queryId) => {
@@ -47,19 +46,14 @@ const getColecttions = (email: string, res: Response) => {
                         console.error("Błąd w uzyskaniu słowek do kolekcji");
                       }
 
-                      console.log(nameResult);
-                      console.log(wordResult);
-
                       DBdata.collection.push({
-                        values: {
-                          name: nameResult[0] as unknown as string,
-                          words: [wordResult as unknown as wordsArray],
-                        },
+                        name: nameResult[0].name as unknown as string,
+                        words: wordResult as unknown as wordsArray,
                       });
-                      if (j == resultsLength) {
+                      if (endOfIteration == resultsLength) {
                         res.send(DBdata);
                       }
-                      j++;
+                      endOfIteration++;
                     });
                   }
                 );
