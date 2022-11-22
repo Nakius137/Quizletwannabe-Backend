@@ -25,7 +25,7 @@ app.use((0, cors_1.default)(corsOptions));
 app.post("/login", login_1.default);
 app.get("/:email", token_1.default, (req, res) => {
     if (req.query.email) {
-        const userContent = (0, getColecttions_1.default)(req.query.email, req, res);
+        const userContent = (0, getColecttions_1.default)(req.query.email, res);
     }
     else {
         throw console.error("Błąd w mainie");
