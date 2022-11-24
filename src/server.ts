@@ -2,10 +2,10 @@ import express, { Application, Response } from "express";
 import dotenv from "dotenv";
 import authToken from "./middlewears/auth/token";
 import autoRefresh from "./middlewears/auth/refreshToken";
-import getColecttions from "./database/queries/getColecttions";
+import getColecttions from "./models/queries/getColecttions";
 import { UserRequest } from "./interfaces/@types";
-import login from "./middlewears/login";
-import register from "./middlewears/register";
+import login from "./controllers/login";
+import register from "./controllers/register";
 import cors from "cors";
 
 dotenv.config();

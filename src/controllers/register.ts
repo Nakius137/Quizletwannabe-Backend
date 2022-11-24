@@ -1,7 +1,7 @@
 import { Response } from "express";
-import addUserToDB from "../database/queries/addUserToDB";
+import addUserToDB from "../models/queries/addUserToDB";
 import hashPassword from "../utilites/hashPassword";
-import { UserRequest } from "./../interfaces/@types";
+import { UserRequest } from "../interfaces/@types";
 
 const register = (req: UserRequest, res: Response) => {
   const email = req.body.email;
