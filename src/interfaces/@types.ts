@@ -16,7 +16,7 @@ export interface dataObj {
   collection: collectionIndex[];
 }
 
-interface collectionIndex {
+export interface collectionIndex {
   [index: number]: string;
   name: string;
   words: wordsArray | string;
