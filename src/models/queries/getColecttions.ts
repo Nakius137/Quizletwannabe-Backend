@@ -9,7 +9,6 @@ const getColecttions = (email: string, res: Response) => {
       if (err) {
         console.error("Błąd w uzyskaniu danych");
       }
-
       const userId = idResult["0"]._id;
 
       let sqlCollection = `SELECT * FROM Subscriptions WHERE _subscriberId = ${userId}`;
@@ -45,7 +44,6 @@ const getColecttions = (email: string, res: Response) => {
                       if (err) {
                         console.error("Błąd w uzyskaniu słowek do kolekcji");
                       }
-
                       DBdata.collection.push({
                         name: nameResult[0].name as unknown as string,
                         words: wordResult as unknown as wordsArray,
@@ -65,7 +63,7 @@ const getColecttions = (email: string, res: Response) => {
       );
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
