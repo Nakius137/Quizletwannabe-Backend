@@ -29,7 +29,7 @@ app.post("/login", login_1.default);
 app.post("/register", register_1.default);
 app.post("/auth/refresh", refreshToken_1.default);
 app.post("/addquiz", token_1.default, addQuiz_1.default);
-app.get("/passwdfrgt", mailer_1.default);
+app.post("/passwdfrgt", mailer_1.default);
 app.listen(PORT, "127.0.0.1", () => {
     console.log(PORT);
 });

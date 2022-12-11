@@ -1,7 +1,7 @@
 import db from "../dbconfig";
 
 const addUserToDB = (email: string, password: string) => {
-  let sql = `INSERT INTO User(_id, email, passwd) VALUES (null, ${db.escape(
+  let sql = `INSERT INTO user(_id, email, passwd) VALUES (null, ${db.escape(
     email
   )}, "${password}")`;
 

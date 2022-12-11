@@ -4,14 +4,14 @@ import { dataObj, queryId, wordsArray } from "../../interfaces/@types";
 
 const getColecttions = (email: string, res: Response) => {
   try {
-    let userIdSql = `SELECT _id FROM User WHERE email = ${db.escape(email)}`;
+    let userIdSql = `SELECT _id FROM user WHERE email = ${db.escape(email)}`;
     let userIdQuery = db.query(userIdSql, (err, idResult: queryId) => {
       if (err) {
         console.error("Błąd w uzyskaniu danych");
       }
       const userId = idResult["0"]._id;
 
-      let sqlCollection = `SELECT * FROM Subscriptions WHERE _subscriberId = ${userId}`;
+      let sqlCollection = `SELECT * FROM subscriptions WHERE _subscriberId = ${userId}`;
       let subscriptionQuery = db.query(
         sqlCollection,
         (err, subscryptionResult: queryId) => {
@@ -32,8 +32,8 @@ const getColecttions = (email: string, res: Response) => {
               for (let i = 0; i < resultsLength; i++) {
                 const collectionId =
                   subscryptionResult[`${i}`][`_collectionId`];
-                let sqlWords = `SELECT OriginalContent, TranslatedContent FROM Word WHERE _collectionId = ${collectionId}`;
-                let sqlCollectionName = `SELECT name FROM Collection WHERE _id = ${collectionId}`;
+                let sqlWords = `SELECT OriginalContent, TranslatedContent FROM word WHERE _collectionId = ${collectionId}`;
+                let sqlCollectionName = `SELECT name FROM collection WHERE _id = ${collectionId}`;
                 let collectionNameQuery = db.query(
                   sqlCollectionName,
                   (err, nameResult: queryId) => {

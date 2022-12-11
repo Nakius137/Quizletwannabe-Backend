@@ -7,7 +7,7 @@ const loginUser = async (
   password: string,
   returnToken: Function
 ) => {
-  const sql = `SELECT passwd FROM User WHERE email=${db.escape(email)}`;
+  const sql = `SELECT passwd FROM user WHERE email=${db.escape(email)}`;
   const userPasswordVerification = db.query(sql, (err, result: queryId) => {
     if (err) {
       console.error("Błąd z baza danych");

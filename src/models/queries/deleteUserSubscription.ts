@@ -1,7 +1,7 @@
 import db from "../dbconfig";
 import { queryId } from "../../interfaces/@types";
 const deleteUserSubscription = (userEmail: string, quizName: string) => {
-  let sqlGetCollectionsId = `SELECT _id FROM Collection WHERE name = ${db.escape(
+  let sqlGetCollectionsId = `SELECT _id FROM collection WHERE name = ${db.escape(
     quizName
   )}`;
 
@@ -11,7 +11,7 @@ const deleteUserSubscription = (userEmail: string, quizName: string) => {
       if (err) {
         console.error(err);
       } else {
-        let sqlGetUserId = `SELECT _id FROM User WHERE email = ${db.escape(
+        let sqlGetUserId = `SELECT _id FROM user WHERE email = ${db.escape(
           userEmail
         )}`;
 

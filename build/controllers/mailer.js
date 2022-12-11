@@ -16,11 +16,10 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 const mailer = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const transporter = nodemailer_1.default.createTransport({
-            host: "hotmail",
+            host: "smtp-mail.outlook.com",
             port: 587,
-            secure: false,
             auth: {
-                user: "m.lawczniczak@tkhtechnology.com",
+                user: "m.lawniczak@tkhtechnology.com",
                 pass: "Qap89583",
             },
         });
